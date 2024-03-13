@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My City - Fuzhou</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .photo {
+            width: 1280px;
+            height: 720px;
+            margin: 10px auto;
+            border: 10px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo ul {
+            width: 1000%;
+            height: 720px;
+            position: absolute;
+            top: 0;
+        }
+
+        .photo ul li {
+            width: 1280px;
+            height: 720px;
+            float: left;
+        }
+
+        .arrowleft,
+        .arrowright {
+            width: 30px;
+            height: 50px;
+            background: #000;
+            position: absolute;
+            top: calc(50% - 25px);
+        }
+
+        .arrowleft {
+            left: 0;
+        }
+
+        .arrowright {
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="photo">
+        <ul>
+            <li><img src="./image/image01.jpg" alt="1"></li>
+            <li><img src="./image/image02.jpg" alt="2"></li>
+            <li><img src="./image/image03.jpg" alt="3"></li>
+            <li><img src="./image/image04.jpg" alt="4"></li>
+            <li><img src="./image/image05.jpg" alt="5"></li>
+            <li><img src="./image/image06.jpg" alt="6"></li>
+            <li><img src="./image/image07.jpg" alt="7"></li>
+            <li><img src="./image/image08.jpg" alt="8"></li>
+            <li><img src="./image/image09.jpg" alt="9"></li>
+            <li><img src="./image/image10.jpg" alt="10"></li>
+        </ul>
+        <div class="arrowleft"></div>
+        <div class="arrowright"></div>
+    </div>
+
+    <script>
+        var photo = document.querySelector('.photo')
+        var photoUL = document.querySelector('.photo ul')
+        var item = document.querySelectorAll('.photo li')
+        var arrowleft = document.querySelector('.arrowleft')
+        var arrowright = document.querySelector('.arrowright')
+
+        function init() {
+            var firstCopy = item[0].cloneNode(true);
+            var lastCopy = item[9].cloneNode(true);
+            photoUL.style.width = '1200%'
+            photoUL.style.left = '-1280px'
+            photoUL.appendChild(firstCopy)
+            photoUL.insertBefore(lastCopy, item[0])
+
+        }
+        init()
+
+        var timerID = null
+
+        function moveLeft() {
+            photoUL.style.left = parseInt(photoUL.style.left) - 1280 + 'px'
+            photoUL.style.transition = '0.5 s'
+            if (parseInt(photoUL.style.left) < -14080) {
+                photoUL.style.left = "-1280px"
+                photoUL.style.transition = '0s'
+                timerID = setInterval(function () {
+                    photoUL.style.left = '-2560px'
+                    photoUL.style.transition = '0.5s'
+                }, 16)
+                clearInterval(timerID)
+            }
+        }
+
+        function moveRight(){
+            photoUL.style.left = parseInt(photoUL.style.left) + 1280 + 'px'
+            photoUL.style.transition = '0.5 s'
+            if (parseInt(photoUL.style.left) > 0) {
+                photoUL.style.left = "-14080px"
+                photoUL.style.transition = '0s'}
+        }
+
+        arrowright.addEventListener('click', moveLeft)
+        arrowleft.addEventListener('click', moveRight)
+
+        setInterval(moveLeft, 2000)
+    </script>
+</body>
+
+</html>
